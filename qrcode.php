@@ -8,11 +8,14 @@ require_once('phpqrcode.php');
 $methode = array_keys($_REQUEST)[0];
 switch($methode) {
     case 'qr': # qrcode.php?qr&label=A&user=B&key=C
-        Functions::chargeVarRequest('label', 'user', 'key', 'issuer', 'algorithm', 'digits', 'period');
+        $variableList = array('label', 'user', 'key', 'issuer', 'algorithm', 'digits', 'period');
+        Functions::chargeVarRequest($variableList);
+        foreach ($variableList as $variable) ${$variable} = urlencode(${$variable});
+
         if (empty($key)) {
             $key = "**********";
         }
-        $qrCode = "otpauth://totp/{$label}:{$user}?secret={$key}";
+        $qrCode = "otpauth://totp/{$label}%3A{$user}?secret={$key}"; // %3A==urlencode(':')
         foreach (array('issuer', 'algorithm', 'digits', 'period') as $champ)
             if (!empty(${$champ}))
                 $qrCode.="&{$champ}={${$champ}}";

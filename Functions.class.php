@@ -364,9 +364,19 @@ class Functions
     /**
     * Charge dans la portée locale des variables de $_REQUEST
     * Ex: chargeVarRequest('liste', 'var') créera $liste et $var venant de $_REQUEST
+    * Il est aussi possible d'utiliser un tableau contenant des noms de variables
+    * Ex: chargeVarRequest('var', array('a', 'b'), 'c')
     */ 
     public static function chargeVarRequest() {
+        $argList = array();
         foreach (func_get_args() as $arg) {
+            if (is_array($arg))
+                foreach ($arg as $element)
+                    $argList []= $element;
+            else
+                $argList []= $arg;
+        }
+        foreach ($argList as $arg) {
             global ${$arg};
             if (array_key_exists($arg, $_REQUEST)) {
                 $valeur = $_REQUEST[$arg];
