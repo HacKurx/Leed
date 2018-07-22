@@ -9,7 +9,7 @@
 class User extends MysqlEntity{
 
     const OTP_INTERVAL = 30;
-    const OTP_DIGITS   = 8;
+    const OTP_DIGITS   = 6;
     const OTP_DIGEST   = 'sha1';
 
     protected $id,$login,$password,$otpSecret;
@@ -65,6 +65,11 @@ class User extends MysqlEntity{
                     return $user;
             }
             $otp = $user->getOtpControler();
+            // @TODO: stocker la longueur de l'OTP demandée dans les données de l'utilisateur
+            /* Le système reste compatible avec l'entrée des 8 chiffres. Entrer 8 chiffres fonctionnera toujours
+             * mais Leed ne tiendra compte que des 6 derniers.
+             */
+            $otpEntered = substr($otpEntered, -6);
             if ($otp->verify($otpEntered) || $otp->verify($otpEntered, time()-10)) {
                 return $user;
             }

@@ -177,7 +177,7 @@
                         {function="_t('HOWTO_RESET_PASSWORD')"}</p>
                         <fieldset>
                             {if="extension_loaded('gd')"}
-                            <img id="qrCodeOtp" class="qrcodeOtp" src="../../qrcode.php?qr&label=Leed&user={$myUser->getLogin()}&key={$myUser->getOtpSecret()}&algorithm=sha1&digits=8&period=30&_qrSize=4&_qrMargin=1"/>
+                            <img id="qrCodeOtp" class="qrcodeOtp" src="../../qrcode.php?qr&label=Leed&user={$myUser->getLogin()}&key={$myUser->getOtpSecret()}&algorithm=sha1&digits=6&period=30&_qrSize=4&_qrMargin=1"/>
                             {else}
                             <img id="qrCodeOtp" class="qrcodeOtp" src="images/QRcode-PhpGdLibraryRequired.png"/>
                             {/if}
